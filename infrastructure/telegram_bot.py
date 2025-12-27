@@ -1,17 +1,18 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler
+from telegram.ext import Application, MessageHandler, filters, CallbackQueryHandler
 from infrastructure.transport_rest_client import TransportRestClient
 
 
 class TelegramBot:
 
-    def __init__(self, token:str):
+    def __init__(self, token:str, client: TransportRestClient):
         self.app = Application.builder().token(token=token).build()
+        self.client = client
 
     async def handle_location(self, update, context):
         location = update.message.location
-        client = TransportRestClient()
-        nearby_stations = client.get_nearby_stations(longitude=location.longitude,latitude=location.latitude)
+
+        nearby_stations = self.client.get_nearby_stations(longitude=location.longitude,latitude=location.latitude)
 
         buttons = []
 
@@ -34,11 +35,11 @@ class TelegramBot:
     async def handle_button_click(self, update, context):
         query = update.callback_query
         await query.answer()
-
         station_id = query.data
-        print(station_id)
+        data = self.client.get_departures(stop_id=station_id)
+
         await query.edit_message_text(
-            text=f"Du hast {station_id} gewählt!"
+            text=f"{data}"
         )
 
     def run(self):

@@ -9,6 +9,11 @@ if __name__ == "__main__":
 
     client = TransportRestClient()
 
-    telegram_bot = TelegramBot(settings.telegram_api_key)
+    telegram_bot = TelegramBot(token=settings.telegram_api_key,client=client)
     telegram_bot.run()
+
+
+
+
+
 
