@@ -17,8 +17,7 @@ class TransportRestClient(TransportAPI):
             response.raise_for_status()
 
             api_data = response.json()
-            stations = [Station(name=station["name"],latitude=float(station["location"]["latitude"]),longitude=float(station["location"]["longitude"])) for station in api_data if "location" in station]
-            print(stations)
+            stations = [Station(name=station["name"],latitude=float(station["location"]["latitude"]),longitude=float(station["location"]["longitude"]),id=station["id"],distance=station["distance"]) for station in api_data if "location" in station]
             return stations
 
         except requests.exceptions.RequestException as e:
