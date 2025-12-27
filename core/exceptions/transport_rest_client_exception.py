@@ -1,0 +1,3 @@
+
+class TransportRestClientException(Exception):
+    pass

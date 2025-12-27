@@ -1,6 +1,6 @@
 from abc import ABC,abstractmethod
 
-from core.domains.Station import Station
+from core.domains.station import Station
 
 
 class TransportAPI(ABC):
