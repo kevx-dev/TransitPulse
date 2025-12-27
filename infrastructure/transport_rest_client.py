@@ -24,8 +24,8 @@ class TransportRestClient(TransportAPI):
         except requests.exceptions.RequestException as e:
             raise TransportRestClientException(e)
 
-    def get_departures(self, stop_id: int) -> list[Departure]:
-        BASE_URL = f"https://v6.db.transport.rest/stops/{stop_id}/departures"
+    def get_departures(self, station_id: int) -> list[Departure]:
+        BASE_URL = f"https://v6.db.transport.rest/stops/{station_id}/departures"
         params = {
             "language":"de",
             "duration":20
